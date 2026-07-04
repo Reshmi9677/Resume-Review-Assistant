@@ -1,4 +1,4 @@
-# AI-Resume-Analyzer
+# Resume Review Assistant
 
 An AI-powered Resume Analyzer that evaluates resumes based on Applicant Tracking System (ATS) principles. The application helps job seekers optimize their resumes by analyzing content, identifying missing keywords, calculating an ATS score, and providing actionable recommendations to improve their chances of getting shortlisted.
 
