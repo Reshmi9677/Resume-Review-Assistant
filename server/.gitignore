@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Secret files
+.env
+server/.env
+client/.env
+
+# Build output
+client/dist/
+
+# Logs
+*.log
