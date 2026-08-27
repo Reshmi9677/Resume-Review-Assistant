@@ -1,5 +1,6 @@
 
 const express = require("express");
+const path = require("path");
 const multer = require("multer");
 const { PDFParse } = require("pdf-parse");
 const mongoose = require("mongoose");
@@ -13,7 +14,7 @@ dns.setDefaultResultOrder("ipv4first");
 process.loadEnvFile();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 
@@ -44,9 +45,6 @@ async function createGeminiClient() {
     });
 }
 
-app.get("/", (req, res) => {
-    res.send("Resume Review Assistant backend is running");
-});
 
 app.post(
     "/api/upload",
@@ -185,6 +183,22 @@ res.status(200).json({
         }
     }
 );
+
+// React frontend ki production build serve karna
+const clientDistPath = path.join(__dirname, "../client/dist");
+
+app.use(express.static(clientDistPath));
+
+// Non-API routes par React website open karna
+app.use((req, res, next) => {
+    if (req.method === "GET" && !req.path.startsWith("/api")) {
+        return res.sendFile(
+            path.join(clientDistPath, "index.html")
+        );
+    }
+
+    next();
+});
 
 app.use((error, req, res, next) => {
     res.status(400).json({
